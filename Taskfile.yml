@@ -4,9 +4,6 @@ tasks:
   dev:
     cmds:
       - air
-  docs:
-    cmds:
-      - swag init --dir ./cmd/http,./internal/task
   build:
     cmds:
       - go build -o http-server cmd/http/main.go
