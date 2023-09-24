@@ -7,7 +7,6 @@ RUN go mod download
 
 COPY . .
 
-RUN go install github.com/swaggo/swag/cmd/swag@latest
 RUN go install github.com/go-task/task/v3/cmd/task@latest
 RUN task docs
 
