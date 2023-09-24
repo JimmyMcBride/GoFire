@@ -1,0 +1,78 @@
+<h1 class="my-4 text-4xl font-bold">Task List</h1>
+
+<div id="task-list" class="overflow-x-auto">
+    {{block "task-list-element" .}}
+        <table class="table table-zebra">
+            <thead>
+                <tr>
+                    <th class="py-2">Title</th>
+                    <th class="py-2">Description</th>
+                    <th class="py-2">Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{range .Results}}
+                    <tr id="task-item-{{.ID.Hex}}">
+                        <td class="py-2">
+                            {{.Title}}
+                        </td>
+                        <td class="py-2">
+                            {{.Description}}
+                        </td>
+                        <td class="py-2">
+                            <input type="checkbox"
+                                   data-task-id="{{.ID.Hex}}"
+                                   hx-patch="/tasks/toggle/{{.ID.Hex}}?page={{$.CurrentPage}}"
+                                   hx-swap="innerHTML"
+                                   hx-target="#task-list"
+                                   {{if .Completed}}checked{{end}}/>
+                        </td>
+                    </tr>
+                {{end}}
+            </tbody>
+        </table>
+        <p class="my-4 text-end">Total Pages: {{.TotalPages}} | Total
+            Results: {{.TotalResults}}</p>
+        <div class="join grid grid-cols-3 w-[50%] mx-auto">
+            <button class="join-item btn btn-outline" {{if eq .Previous 0}}disabled{{end}}
+                    hx-get="/tasks/get?page={{.Previous}}"
+                    hx-swap="innerHTML" hx-target="#task-list">«
+            </button>
+            <button class="join-item">Page {{.CurrentPage}}</button>
+            <button class="join-item btn btn-outline" {{if eq .Next 0}}disabled{{end}}
+                    hx-get="/tasks/get?page={{.Next}}"
+                    hx-swap="innerHTML" hx-target="#task-list">»
+            </button>
+        </div>
+    {{ end }}
+
+</div>
+
+
+<div>
+    <h1 class="my-4 text-xl font-bold">
+        Add Task:
+        <span id="spinner"
+              class="loading loading-ring loading-md htmx-indicator"
+              aria-hidden="true"
+              role="status"></span>
+    </h1>
+
+    <form _="on submit target.reset()" hx-indicator="#spinner" hx-post="/tasks" hx-swap="innerHTML"
+          hx-target="#task-list">
+        <div class="mb-2">
+            <label for="task-title">
+                <strong>Title</strong>
+            </label>
+            <input id="task-title" name="title" type="text"/>
+        </div>
+        <div class="mb-3">
+            <label for="task-description"><strong>Description</strong></label>
+            <input id="task-description" name="description" type="text"/>
+        </div>
+
+        <button class="btn btn-primary" type="submit">
+            Submit
+        </button>
+    </form>
+</div>

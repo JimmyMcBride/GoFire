@@ -1,0 +1,16 @@
+<tr id="task-item-{{.Task.ID.Hex}}">
+    <td class="py-2">
+        {{.Task.Title}}
+    </td>
+    <td class="py-2">
+        {{.Task.Description}}
+    </td>
+    <td class="py-2">
+        <input type="checkbox"
+               data-task-id="{{.Task.ID.Hex}}"
+               hx-patch="/tasks/toggle/{{.Task.ID.Hex}}?page={{.CurrentPage}}"
+               hx-swap="outerHTML"
+               hx-target="#task-item-{{.Task.ID.Hex}}"
+               {{if .Task.Completed}}checked{{end}}/>
+    </td>
+</tr>
