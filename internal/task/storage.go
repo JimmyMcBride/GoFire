@@ -103,6 +103,10 @@ func (s *Storage) getPaginatedTasks(
 
 	// Calculate total pages
 	totalPages := int(math.Ceil(float64(totalResults) / float64(filterOptions.PageSize)))
+	if totalPages == 0 {
+		totalPages = 1
+	}
+	fmt.Printf("total pages: %d\n", totalPages)
 
 	if filterOptions.Page > totalPages {
 		return Pagination{}, fmt.Errorf("page number exceeds total pages")

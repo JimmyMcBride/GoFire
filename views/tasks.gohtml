@@ -20,12 +20,14 @@
                             {{.Description}}
                         </td>
                         <td class="py-2">
-                            <input type="checkbox"
-                                   data-task-id="{{.ID.Hex}}"
-                                   hx-patch="/tasks/toggle/{{.ID.Hex}}?page={{$.CurrentPage}}"
-                                   hx-swap="innerHTML"
-                                   hx-target="#task-list"
-                                   {{if .Completed}}checked{{end}}/>
+                            <label>
+                                <input type="checkbox"
+                                       data-task-id="{{.ID.Hex}}"
+                                       hx-patch="/tasks/toggle/{{.ID.Hex}}?page={{$.CurrentPage}}"
+                                       hx-swap="innerHTML"
+                                       hx-target="#task-list"
+                                       {{if .Completed}}checked{{end}}/>
+                            </label>
                         </td>
                     </tr>
                 {{end}}

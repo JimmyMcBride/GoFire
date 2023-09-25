@@ -30,6 +30,7 @@ func (t *Controller) getBaseRoute(c *fiber.Ctx) error {
 	// get all tasks in a paginated fashion
 	paginatedTasks, err := t.storage.getPaginatedTasks(c.Context(), filterOptions)
 	if err != nil {
+		fmt.Printf("Error getting tasks: %v\n", err)
 		// TODO: This needs to be an error page
 		return c.Status(fiber.StatusInternalServerError).JSON(
 			fiber.Map{
